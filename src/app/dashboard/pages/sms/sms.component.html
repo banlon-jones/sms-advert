@@ -1,0 +1,79 @@
+<app-navbar></app-navbar>
+<div class="row">
+  <div class="col-md-2 col-sm-0">
+    <app-sidebar></app-sidebar>
+  </div>
+  <div class="col-md-10 col-sm-12"><br/>
+    <div class="text-center">
+      <h2> Compose message </h2>
+    </div>
+    <div class="row">
+      <div class="col-md-8 offset-md-2 col-sm-10 offset-sm-1">
+        <form [formGroup]="smsForm" (ngSubmit)="onSubmit()">
+          <div class="mb-3">
+            <label>title</label>
+            <input type="text" class="form-control" formControlName="name"/>
+            <div *ngIf="(smsFormControl.name.touched || smsFormControl.name.dirty) && smsFormControl.name.invalid" class="form-text text-danger">
+              <div *ngIf="smsFormControl.name.errors?.required">
+                title is required.
+              </div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label>message</label>
+            <textarea class="form-control" formControlName="message"></textarea>
+            <div *ngIf="(smsFormControl.message.touched || smsFormControl.message.dirty) && smsFormControl.message.invalid" class="form-text text-danger">
+              <div *ngIf="smsFormControl.message.errors?.required">
+                Message is required.
+              </div>
+            </div>
+          </div><br/>
+        </form>
+        <button (click)="onSubmit()" class="col-12 btn btn-danger"
+                data-mdb-target="#sendModal"
+                data-mdb-toggle="modal"> Send <i class="fas fa-paper-plane"></i></button>
+      </div>
+    </div>
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="sendModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Select campaign</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-mdb-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form [formGroup]="recipientsForm" (ngSubmit)="sendSms()">
+              <div class="mb-3">
+                <label> select campaigns to send to </label>
+                <select class="form-select" formControlName="campaign">
+                  <option selected disabled>Open this select menu</option>
+                  <option *ngFor="let campaign of campaigns" value="{{campaign.id}}"> {{campaign.name}} </option>
+                </select>
+                <div *ngIf="(recipientsFormControl.campaign.touched || recipientsFormControl.campaign.dirty) && recipientsFormControl.campaign.invalid" class="form-text text-danger">
+                  <div *ngIf="recipientsFormControl.campaign.errors?.required">
+                    Message is required.
+                  </div>
+                </div>
+              </div>
+              <button (click)="sendSms()" class="btn btn-danger" data-mdb-dismiss="modal"> confirm </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>

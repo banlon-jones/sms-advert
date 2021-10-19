@@ -1,0 +1,17 @@
+<div class="dropdown">
+  <a id="dropdownMenuButton"
+    data-mdb-toggle="dropdown"
+    aria-expanded="false">
+    <i class="fas fa-user-alt text-dark bg-white" style="padding: 8px 12px; border-radius: 100%"></i>
+    <span class="text-white">
+    {{user.email}}
+    </span>
+    <i class="fas fa-angle-down"></i>
+  </a>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <li><a class="dropdown-item" href="#"> profile </a></li>
+    <li><a class="dropdown-item" routerLink="/transactions"> transactions </a></li>
+    <li><a class="dropdown-item" (click)="signout()"> logout </a></li>
+  </ul>
+</div>
+

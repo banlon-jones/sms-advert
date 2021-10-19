@@ -1,0 +1,135 @@
+<app-navbar></app-navbar>
+<div class="row">
+  <div class="col-md-2 col-sm-0">
+    <app-sidebar></app-sidebar>
+  </div>
+  <div class="col-md-10 col-sm-12"><br/>
+    <div class="text-center">
+      <h2> Manage Contact </h2>
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-6">
+        <div>
+            <button class="btn btn-dark"><i class="fas fa-download"></i> download contact template </button>
+        </div>
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">email</th>
+              <th scope="col">country code</th>
+              <th scope="col">phone</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let contact of contacts">
+              <td>{{contact.name}}</td>
+              <td>{{contact.email}}</td>
+              <td>{{contact.country_code}}</td>
+              <td> {{contact.phone}} </td>
+              <td>
+                <div class="btn-group">
+                  <button class="btn btn-outline-dark" data-mdb-toggle="modal" data-mdb-target="#Modal" (click)="getContact(contact.id)"> Edit </button>
+                  <button class="btn btn-danger" (click)="deleteContact(contact.id)"> Delete </button>
+                </div>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-md-4 col-6">
+        <div class="card">
+          <div class="card-body">
+            <h3 class="text-center card-title"> Add contact </h3>
+            <form [formGroup]="createForm" (ngSubmit)="onSubmit()">
+              <div class="mb-3">
+                <label>Name</label>
+                <input type="text" class="form-control" formControlName="name"/>
+              </div>
+              <div class="mb-3">
+                <label> select contact group </label>
+                <select class="form-select" aria-label="Default select example" formControlName="cid">
+                  <option *ngFor="let campaign of campaigns" value="{{campaign.id}}">{{campaign.name}}</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label>email</label>
+                <input type="email" class="form-control" formControlName="email"/>
+              </div>
+              <div class="mb-3">
+                <label>country code</label>
+                <input type="number" class="form-control" formControlName="country_code"/>
+              </div>
+              <div class="mb-3">
+                <label> phone </label>
+                <input type="number" class="form-control" formControlName="phone"/>
+              </div>
+              <br/>
+              <button type="submit" class="col-12 btn btn-danger">Save</button>
+              <br><br/>
+            </form>
+          </div>
+        </div><br/>
+        <div>
+          <button class="btn btn-outline-dark"><i class="fas fa-upload"></i> upload contacts </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Edit Modal -->
+<div
+  class="modal fade"
+  id="Modal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit group</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-mdb-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="editForm" (ngSubmit)="updateContact()">
+          <div class="mb-3">
+            <label>Name</label>
+            <input type="text" class="form-control" formControlName="name"/>
+          </div>
+          <div class="mb-3">
+            <label> select contact group </label>
+            <select class="form-select" aria-label="Default select example" formControlName="cid">
+              <option *ngFor="let campaign of campaigns" value="{{campaign.id}}">{{campaign.name}}</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label>email</label>
+            <input type="email" class="form-control" formControlName="email"/>
+          </div>
+          <div class="mb-3">
+            <label>country code</label>
+            <input type="number" class="form-control" formControlName="country_code"/>
+          </div>
+          <div class="mb-3">
+            <label> phone </label>
+            <input type="number" class="form-control" formControlName="phone"/>
+          </div>
+          <br/>
+          <button (click)="updateContact()" class="col-12 btn btn-danger" data-mdb-dismiss="modal">Save</button>
+          <br><br/>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>

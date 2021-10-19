@@ -1,0 +1,43 @@
+<app-navbar></app-navbar>
+<div class="container">
+  <div class="row">
+    <div class="col-md-4 col-sm-10 offset-md-4 offset-sm-1">
+      <br/><br/><br/><br/>
+      <div class="card">
+        <div class="card-body">
+          <h3 class="text-center card-title">Login</h3>
+          <form [formGroup]="signinForm" (ngSubmit)="onSubmit()">
+            <div class="mb-3">
+              <label>Email address</label>
+              <input type="email" class="form-control" formControlName="email"/>
+              <div *ngIf="(signinFormControl.email.touched || signinFormControl.email.dirty) && signinFormControl.email.invalid" class="form-text text-danger">
+                <div *ngIf="signinFormControl.email.errors?.required">
+                  email is required.
+                </div>
+                Invalid Email
+              </div>
+            </div>
+            <div class="mb-3">
+              <label>Password</label>
+              <input type="password" class="form-control" formControlName="password"/>
+              <div *ngIf="(signinFormControl.password.touched || signinFormControl.password.dirty) && signinFormControl.password.invalid" class="form-text text-danger">
+                <div *ngIf="signinFormControl.password.errors?.required">
+                  Password is required.
+                </div>
+                <div *ngIf="signinFormControl.password.errors?.minlength">
+                  Password must be at least 5 characters long.
+                </div>
+              </div>
+            </div>
+            <button type="submit" class="col-12 btn btn-danger">login</button>
+          </form>
+          <br/>
+          <button routerLink="/forgot-password" class="col-12 btn btn-dark">Forgot password</button>
+          <br/><br/>
+          <a class="text-center" routerLink="/signup"> i don't have an account signup </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

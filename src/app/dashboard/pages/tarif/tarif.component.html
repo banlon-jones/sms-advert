@@ -1,0 +1,158 @@
+<app-navbar></app-navbar>
+<div class="row">
+  <div class="col-md-2 col-sm-0">
+    <app-sidebar></app-sidebar>
+  </div>
+  <div class="col-md-10 col-sm-12"><br/>
+    <div class="text-center">
+      <h2> Manage tarrif </h2>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-6">
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">min range</th>
+                <th scope="col">max range</th>
+                <th scope="col">price</th>
+                <th scope="col">actions</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let tarif of tarifs">
+                <td>{{tarif.name}}</td>
+                <td>{{tarif.min}}</td>
+                <td>{{tarif.max}}</td>
+                <td>{{tarif.price}} <small> per SMS </small></td>
+                <td>
+                  <div class="btn-group">
+                    <button class="btn btn-outline-dark" data-mdb-toggle="modal" data-mdb-target="#Modal" (click)="getTarif(tarif.id)"> Edit </button>
+                    <button class="btn btn-danger" (click)="deleteTarif(tarif.id)"> Delete </button>
+                  </div>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="col-md-4 col-6">
+          <div class="card">
+            <div class="card-body">
+              <h3 class="text-center card-title"> Create tarrif </h3>
+              <form [formGroup]="createTarifForm" (ngSubmit)="onSubmit()">
+                <div class="mb-3">
+                  <label>Name</label>
+                  <input type="text" class="form-control" formControlName="name"/>
+                  <div *ngIf="(tarifControl.name.touched || tarifControl.name.dirty) && tarifControl.name.invalid" class="form-text text-danger">
+                    <div *ngIf="tarifControl.name.errors?.required">
+                      Name is required.
+                    </div>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label>min range</label>
+                  <input type="number" class="form-control" formControlName="min"/>
+                  <div *ngIf="(tarifControl.name.touched || tarifControl.name.dirty) && tarifControl.name.invalid" class="form-text text-danger">
+                    <div *ngIf="tarifControl.name.errors?.required">
+                      min range is required.
+                    </div>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label>max range</label>
+                  <input type="number" class="form-control" formControlName="max"/>
+                  <div *ngIf="(tarifControl.max.touched || tarifControl.max.dirty) && tarifControl.max.invalid" class="form-text text-danger">
+                    <div *ngIf="tarifControl.max.errors?.required">
+                      max is required.
+                    </div>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label>price</label>
+                  <input type="number" class="form-control" formControlName="price"/>
+                  <div *ngIf="(tarifControl.price.touched || tarifControl.price.dirty) && tarifControl.price.invalid" class="form-text text-danger">
+                    <div *ngIf="tarifControl.price.errors?.required">
+                      price is required.
+                    </div>
+                  </div>
+                </div>
+                <br/>
+                <button type="submit" class="col-12 btn btn-danger">Save</button>
+                <br><br/>
+              </form>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+<!--Edit Modal -->
+<div
+  class="modal fade"
+  id="Modal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit tarrif</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-mdb-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="editTarifForm" (ngSubmit)="updateTarif()">
+          <div class="mb-3">
+            <label>Name</label>
+            <input type="text" class="form-control" formControlName="name"/>
+            <div *ngIf="(editControl.name.touched || editControl.name.dirty) && editControl.name.invalid" class="form-text text-danger">
+              <div *ngIf="editControl.name.errors?.required">
+                Name is required.
+              </div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label>min range</label>
+            <input type="number" class="form-control" formControlName="min"/>
+            <div *ngIf="(editControl.name.touched || editControl.name.dirty) && editControl.name.invalid" class="form-text text-danger">
+              <div *ngIf="editControl.name.errors?.required">
+                min range is required.
+              </div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label>max range</label>
+            <input type="number" class="form-control" formControlName="max"/>
+            <div *ngIf="(editControl.max.touched || editControl.max.dirty) && editControl.max.invalid" class="form-text text-danger">
+              <div *ngIf="editControl.max.errors?.required">
+                max is required.
+              </div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label>price</label>
+            <input type="number" class="form-control" formControlName="price"/>
+            <div *ngIf="(editControl.price.touched || editControl.price.dirty) && editControl.price.invalid" class="form-text text-danger">
+              <div *ngIf="editControl.price.errors?.required">
+                price is required.
+              </div>
+            </div>
+          </div>
+          <br/>
+          <button (click)="updateTarif()" class="col-12 btn btn-danger" data-mdb-dismiss="modal">Save</button>
+          <br><br/>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>
